@@ -3,11 +3,24 @@ const User = require("../models/users");
 const Chat = require("../models/chats");
 
 exports.getChats = (req, res, next) => {
-  console.log(res.locals.user);
-  res.status(200).json({
-    success: true,
-    user: `${res.locals.user.username}`,
-  });
+  User.findOne({ username: res.locals.user.username })
+    .populate({
+      path: "chats",
+      populate: {
+        path: "sender",
+        select: "username -_id",
+      },
+      select: "-receivers -_id -__v",
+    })
+    .select("-_id -password -__v")
+    .then((user) => {
+      console.log(user);
+      res.status(200).json({
+        success: true,
+        ...user._doc,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.sendChat = (req, res, next) => {
@@ -25,15 +38,11 @@ exports.sendChat = (req, res, next) => {
     User.find({ username: { $in: receiverList } })
       .then((result) => {
         return result.map((ele) => {
-          return {
-            userId: new ObjectId(ele._id),
-          };
+          return new ObjectId(ele._id);
         });
       })
       .then((list) => {
-        receiverList = list.map((ele) => {
-          return ele.userId;
-        });
+        receiverList = list;
         chat._doc.receivers = list;
         return chat.save();
       })
@@ -41,7 +50,7 @@ exports.sendChat = (req, res, next) => {
         const chatId = new ObjectId(chat._id);
         return User.updateMany(
           { _id: { $in: receiverList } },
-          { $push: { chats: { chatId: chatId } } }
+          { $push: { chats: chatId } }
         );
       })
       .then((result) => {

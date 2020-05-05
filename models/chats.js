@@ -12,11 +12,9 @@ const chatSchema = new Schema({
   },
   receivers: [
     {
-      userId: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
   ],
 });
