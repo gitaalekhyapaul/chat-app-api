@@ -97,7 +97,7 @@
     > 1. Parameter Name: _content_  
     >    Parameter Requirement: **Yes**  
     >    Data Type: String  
-    >    Description: Chat with usertags as [**SPECIFIED BELOW FORMAT**](##api-note-content-specification)
+    >    Description: Chat with usertags as [**SPECIFIED BELOW FORMAT**](#api-note-specification)
     >
     > - **Request Headers:**
     >
