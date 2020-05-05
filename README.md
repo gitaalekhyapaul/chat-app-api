@@ -133,7 +133,7 @@
 # **API Note Specification:**
 
 > **The note should contain the usernames of the recipient preceded by `@` symbol. An exapmle of a note is as follows:**  
-> `Hello. This note should reach the @admin and @client users. Thank you.`  
+> `"content" : "Hello. This note should reach the @admin and @client users. Thank you."`  
 > **When this string is passed in the API, the `admin` and `client` usernames are searched for, in the DB and **ONLY IF FOUND**, the note is delivered to their accounts.**
 
 4.  ### **/api/chats/get => GET Route**
