@@ -20,7 +20,13 @@ exports.getChats = (req, res, next) => {
         ...user._doc,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+        err: "Server Error. Please try again.",
+      });
+    });
 };
 
 exports.sendChat = (req, res, next) => {
