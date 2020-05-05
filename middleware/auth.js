@@ -3,6 +3,9 @@ const User = require("../models/users");
 
 module.exports.verifyUser = (req, res, next) => {
   return new Promise((data) => {
+    if (!req.headers.authorization) {
+      throw new Error("Please login.");
+    }
     const authToken = req.headers.authorization.split(" ")[1];
     jwt.verify(
       authToken,
