@@ -37,9 +37,13 @@ exports.sendChat = (req, res, next) => {
     content: content,
   });
   try {
+    // let receiverList = content
+    //   .split(" ")
+    //   .filter((word) => word.startsWith("@"))
+    //   .map((word) => word.substring(1));
+
     let receiverList = content
-      .split(" ")
-      .filter((word) => word.startsWith("@"))
+      .match(/@[a-z0-9_]+/gi) // Replaced the spilt and filter with a robust RegEx
       .map((word) => word.substring(1));
     User.find({ username: { $in: receiverList } })
       .then((result) => {
