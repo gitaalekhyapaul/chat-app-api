@@ -15,7 +15,9 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/", (req, res, next) => {
-  res.redirect("https://github.com/gitaalekhyapaul/chat-app-api");
+  res.send(`
+  <h1> Go to this <a href="https://github.com/gitaalekhyapaul/chat-app-api#a-chat-app-api---expressjs-and-mongodb">link</a> for the API Documentation</h1>
+  `);
 });
 app.use("/api/chats", chatRoutes);
 app.use("/api/auth", authRoutes);

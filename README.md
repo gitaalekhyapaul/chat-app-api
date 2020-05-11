@@ -8,6 +8,10 @@
 
 # **API Documentation**
 
+## **API Link:**
+
+**_[https://chat-app-gap-05052020.herokuapp.com/](https://chat-app-gap-05052020.herokuapp.com/)_**
+
 ## **Routes declared:**
 
 ### **1. Authentication Routes:**
