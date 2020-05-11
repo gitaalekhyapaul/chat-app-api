@@ -14,6 +14,11 @@
 
 ## **Routes declared:**
 
+1. **/api/auth/register : To register new users.**
+2. **/api/auth/login : To login for registered users.**
+3. **/api/chats/send : To send messages (in the [specified format](#api-note-specification)) to other users from the logged in user.**
+4. **/api/chats/get : To get the messages sent to the logged in user.**
+
 ### **1. Authentication Routes:**
 
 1.  ### **/api/auth/register => POST Route**
