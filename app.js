@@ -14,6 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get("/", (req, res, next) => {
+  res.redirect("https://github.com/gitaalekhyapaul/chat-app-api");
+});
 app.use("/api/chats", chatRoutes);
 app.use("/api/auth", authRoutes);
 
