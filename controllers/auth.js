@@ -10,6 +10,12 @@ exports.registerUser = (req, res, next) => {
       if (user) {
         throw new Error("Username already exists.");
       }
+      const usernameCheck = new RegExp(/[a-z0-9_.]+[^.]$/g);
+      if (!usernameCheck.test(username)) {
+        throw new Error(
+          "Invalid Username. Username should contain (a-z), (0-9), (.) or (_) but cannot end in (.)"
+        );
+      }
       return brcrypt.hash(password, 12).then((hashedPassword) => {
         const user = new User({
           username: username,

@@ -14,7 +14,6 @@ exports.getChats = (req, res, next) => {
     })
     .select("-_id -password -__v")
     .then((user) => {
-      console.log(user);
       res.status(200).json({
         success: true,
         ...user._doc,
@@ -37,10 +36,13 @@ exports.sendChat = (req, res, next) => {
     content: content,
   });
   try {
-    let receiverList = content
-      .split(" ")
-      .filter((word) => word.startsWith("@"))
-      .map((word) => word.substring(1));
+    let receiverList = content.match(/@[a-z0-9_.]+/g).map((word) => {
+      if (word.endsWith(".")) {
+        return word.substring(1, word.length - 1);
+      } else {
+        return word.substring(1);
+      }
+    });
     User.find({ username: { $in: receiverList } })
       .then((result) => {
         return result.map((ele) => {
@@ -65,15 +67,38 @@ exports.sendChat = (req, res, next) => {
         });
       })
       .catch((err) => {
+        console.log(err);
         res.status(400).json({
           success: false,
           err: `${err.name}`,
         });
       });
   } catch (err) {
+    console.log(err);
     res.status(400).json({
       success: false,
       err: "Bad request format. Missing content.",
     });
   }
+};
+
+exports.getAllUsers = (req, res, next) => {
+  User.find()
+    .select("username -_id")
+    .then((users) => {
+      return users.map((ele) => ele.username);
+    })
+    .then((users) => {
+      res.status(200).json({
+        success: true,
+        users: users,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+        err: "Server Error. Please try again.",
+      });
+    });
 };

@@ -34,7 +34,8 @@ module.exports.verifyUser = (req, res, next) => {
     .catch((err) => {
       if (
         err.name === "TokenExpiredError" ||
-        err.name === "JsonWebTokenError"
+        err.name === "JsonWebTokenError" ||
+        err.name === "SyntaxError"
       ) {
         res.status(401).json({
           success: false,
